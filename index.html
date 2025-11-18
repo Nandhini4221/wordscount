@@ -4,31 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        color: white;
+        font-family: Arial;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        padding: 10%;
+      }
+      textarea {
+        width: 50%;
+        height: 200px;
+        font-size: 18px;
+      }
+    </style>
   </head>
-  <body>
+
+  <body id="bg">
     <h1>Word Char Words Count</h1>
-    <textarea name="" id="textarea"></textarea>
-    <p>wordCount :<span id="wordCount"> 0</span></p>
-    <p>charCount :<span  id="charCount"> 0</span></p>
-    <p>remaining words(out of 5000) :<span id="remaining">5000</span></p>
-    <!-- <p>balance: <span id="balance">100</span></p> -->
-    
+
+    <textarea id="textarea"></textarea>
+
+    <p>Word Count: <span id="wordCount">0</span></p>
+    <p>Char Count: <span id="charCount">0</span></p>
+    <p>Remaining words (out of 5000): <span id="remaining">5000</span></p>
+
     <script>
-      let textarea = document.getElementById('textarea')
-      textarea.addEventListener("input", (e) => {
-        e.preventDefault()
-        let total = textarea.value.length
-        console.log(total)
-        let remaining = document.getElementById("remaining");
-        let words = 5000;
-        let colabwords = words - total
-        remaining.innerHTML = colabwords
-        let charCount = document.getElementById("charCount");
-        charCount.innerHTML = total
-        let numbers = textarea.value.split(" ").length
-        let wordCount = document.getElementById("wordCount");
-        wordCount.innerHTML = numbers
+      let textarea = document.getElementById("textarea");
+
+      textarea.addEventListener("input", () => {
+        let total = textarea.value.length;
+        let wordsLeft = 5000 - total;
+
+        document.getElementById("charCount").innerHTML = total;
+        document.getElementById("remaining").innerHTML = wordsLeft;
+
+        // Word count (ignores extra spaces)
+        let words = textarea.value.trim().split(/\s+/).filter(Boolean).length;
+        document.getElementById("wordCount").innerHTML = words;
       });
-    </script> 
+
+      VANTA.FOG({
+  el: "#bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 500.00,
+  minWidth: 200.00
+})
+    </script>
+
   </body>
 </html>
+
